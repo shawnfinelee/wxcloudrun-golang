@@ -1,0 +1,44 @@
+{
+  "containers": [
+    {
+      "name": "wxcloudrun-golang",
+      "domain": "",
+      "ip": "",
+      "containerId": "8205cf8aee0cabe106d18689cfe6c3956dc585f3cb846aaf464c1847aefd85a6"
+    }
+  ],
+  "config": {
+    "wxcloudrun-golang": {
+      "containerPort": 80,
+      "minNum": 0,
+      "maxNum": 5,
+      "cpu": 1,
+      "mem": 2,
+      "policyType": "cpu",
+      "policyThreshold": 60,
+      "policyDetails": [
+        {
+          "PolicyType": "cpu",
+          "PolicyThreshold": 60
+        },
+        {
+          "PolicyType": "mem",
+          "PolicyThreshold": 60
+        }
+      ],
+      "envParams": {
+        "GOPROXY": "https://goproxy.cn",
+        "MYSQL_USERNAME": "root",
+        "MYSQL_PASSWORD": "tennis123+",
+        "MYSQL_ADDRESS": "host.docker.internal"
+      },
+      "customLogs": "stdout",
+      "dataBaseName": "golang_demo",
+      "executeSQLs": [
+        "CREATE DATABASE IF NOT EXISTS golang_demo;",
+        "USE golang_demo;",
+        "CREATE TABLE IF NOT EXISTS `Counters` (`id` int(11) NOT NULL AUTO_INCREMENT, `count` int(11) NOT NULL DEFAULT 1, `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET = utf8;"
+      ]
+    }
+  }
+}

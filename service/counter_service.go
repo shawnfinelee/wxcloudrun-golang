@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"time"
-
+	"wxcloudrun-golang/db"
 	"wxcloudrun-golang/db/dao"
 	"wxcloudrun-golang/db/model"
 
@@ -32,11 +32,33 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 // HelloHandler 接口
 func HelloHandler(w http.ResponseWriter, r *http.Request) {
+
+	openid := r.Header.Get("X-WX-OPENID")
+
 	res := &JsonResult{}
-	res.Data = "hello"
+	res.Data = "hello " + openid
 	msg, err := json.Marshal(res)
 	if err != nil {
 		fmt.Fprint(w, "内部错误")
+		return
+	}
+	w.Header().Set("content-type", "application/json")
+	w.Write(msg)
+}
+
+func SqlHandler(w http.ResponseWriter, r *http.Request) {
+	res := &JsonResult{}
+	var err error
+
+	err = db.Get().AutoMigrate(&model.PlayerModel{})
+	if err != nil {
+		fmt.Fprint(w, "内部错误1")
+		return
+	}
+
+	msg, err := json.Marshal(res)
+	if err != nil {
+		fmt.Fprint(w, "内部错误2")
 		return
 	}
 	w.Header().Set("content-type", "application/json")

@@ -9,3 +9,7 @@ type CounterModel struct {
 	CreatedAt time.Time `gorm:"column:createdAt" json:"createdAt"`
 	UpdatedAt time.Time `gorm:"column:updatedAt" json:"updatedAt"`
 }
+
+func (CounterModel) TableName() string {
+	return "Counter"
+}
